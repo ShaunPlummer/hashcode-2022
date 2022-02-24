@@ -39,14 +39,12 @@ private fun processFile(file: File) {
         val team = ProjectTeam(project)
         projectTeams.add(team)
         project.roles.forEach { role ->
-            contributors.find { it.hasSkillAtLevel(role.skillName, role.level) }?.let { contributor ->
+            contributors.find {
+                it.hasSkillAtLevel(role.skillName, role.level) && !team.hasContributor(it)
+            }?.let { contributor ->
                 team.team.add(contributor)
             }
         }
-    }
-
-    projects.forEach {
-        println("name: ${it.name}, teamRoles: ${contributors.haveSkillsFor(it)}")
     }
 
     FileWriter("out/${file.name}").write(projectTeams)

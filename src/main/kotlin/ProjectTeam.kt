@@ -3,6 +3,8 @@ data class ProjectTeam(
     val team: MutableList<Contributor> = mutableListOf()
 ) {
     fun toTeamNames() = team.joinToString(separator = " ") { it.name }
+
+    fun hasContributor(contributor: Contributor) = team.any { it == contributor }
 }
 
 fun List<Contributor>.haveSkillsFor(project: Project): MutableMap<Role, Contributor?>? {
