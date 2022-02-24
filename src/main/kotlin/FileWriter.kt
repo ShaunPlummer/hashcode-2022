@@ -8,6 +8,7 @@ class FileWriter(private val file: File) {
         file.apply {
             parentFile.mkdirs()
             createNewFile()
+            file.delete()
         }
     }
 
@@ -16,9 +17,7 @@ class FileWriter(private val file: File) {
         teams.forEach { projectTeam ->
 
             writeLine(projectTeam.project.name)
-            projectTeam.team.forEach {
-                writeLine(it.name)
-            }
+            writeLine(projectTeam.toTeamNames())
         }
     }
 

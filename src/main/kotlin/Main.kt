@@ -8,7 +8,7 @@ import java.io.File
 fun main(args: Array<String>) {
     File(args.first())
         .listFiles()
-        ?.filterNot { it.name == ".gitignore" }
+        ?.filter { it.name == "a_an_example.in.txt" }
         ?.forEach(::processFile)
 }
 
@@ -24,10 +24,10 @@ private fun processFile(file: File) {
         fr.reader.getProject()
     }
     println(projects)
-    println("team skills: ${contributors.teamSkills()}")
+    // println("team skills: ${contributors.teamSkills()}")
 
     projects.forEach { project ->
-        println("project: ${project.name}, team can do: ${contributors.haveSkillsFor(project)}")
+        // println("project: ${project.name}, team can do: ${contributors.haveSkillsFor(project)}")
     }
 
     val sortedProjects: List<Project> = projects
@@ -40,7 +40,6 @@ private fun processFile(file: File) {
         projectTeams.add(team)
         project.roles.forEach { role ->
             contributors.find { it.hasSkillAtLevel(role.skillName, role.level) }?.let { contributor ->
-                contributors.remove(contributor)
                 team.team.add(contributor)
             }
         }
@@ -51,7 +50,7 @@ private fun processFile(file: File) {
 
 fun BufferedReader.getContributor(): Contributor {
     val (name, skillCount) = readLine()!!.split(" ").toList()
-    println("name: $name, skillcount: $skillCount")
+    // println("name: $name, skillcount: $skillCount")
     val skills = List(skillCount.toInt()) {
         this.getSkill()
     }
