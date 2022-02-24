@@ -23,6 +23,6 @@ class FileWriter(private val file: File) {
     }
 
     fun writeLine(line: String) {
-        file.writeText("$line \n")
+        file.appendText("$line \n")
     }
 }

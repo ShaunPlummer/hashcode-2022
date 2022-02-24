@@ -1,6 +1,6 @@
 data class ProjectTeam(
     val project: Project,
-    val team: List<Contributor>,
+    val team: List<Contributor> = mutableListOf(),
     val teamRoles: Map<Role, Contributor>
 )
 

@@ -18,7 +18,7 @@ private fun processFile(file: File) {
     val (contributorCount, projectCount) = fr.header.toList()
     val contributors = List(contributorCount.toInt()) {
         fr.reader.getContributor()
-    }
+    }.toMutableList()
     println(contributors)
     val projects = List(projectCount.toInt()) {
         fr.reader.getProject()
@@ -30,15 +30,27 @@ private fun processFile(file: File) {
         println("project: ${project.name}, team can do: ${contributors.haveSkillsFor(project)}")
     }
 
-    projects.sortedBy { it.score }.forEach {
+    val sortedProjects: List<Project> = projects
+        .filter { contributors.haveSkillsFor(it) }
+        .sortedByDescending { it.score }
 
+    val projectTeams = mutableListOf<ProjectTeam>()
+    sortedProjects.forEach { project ->
+        val team = ProjectTeam(project)
+        projectTeams.add(team)
+        project.roles.forEach { role ->
+            contributors.find { it.hasSkillAtLevel(role.skillName, role.level) }?.let { contributor ->
+                contributors.remove(contributor)
+                team.team.add(contributor)
+            }
+        }
     }
 
     projects.forEach {
         println("name: ${it.name}, teamRoles: ${contributors.haveSkillsFor(it)}")
     }
 
-    // FileWriter("out/${file.name}").write()
+    FileWriter("out/${file.name}").write(projectTeams)
 }
 
 fun BufferedReader.getContributor(): Contributor {
