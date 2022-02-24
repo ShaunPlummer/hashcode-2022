@@ -24,6 +24,11 @@ private fun processFile(file: File) {
         fr.reader.getProject()
     }
     println(projects)
+    println("team skills: ${contributors.teamSkills()}")
+
+    projects.forEach { project ->
+        println("project: ${project.name}, team can do: ${contributors.haveSkills(project)}")
+    }
 
     // val outputFile = FileWriter("out/${file.name}")
     // outputFile.writeLine(it)
