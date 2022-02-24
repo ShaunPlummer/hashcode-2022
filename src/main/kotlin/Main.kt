@@ -34,6 +34,10 @@ private fun processFile(file: File) {
 
     }
 
+    projects.forEach {
+        println("name: ${it.name}, teamRoles: ${contributors.haveSkillsFor(it)}")
+    }
+
     // FileWriter("out/${file.name}").write()
 }
 
