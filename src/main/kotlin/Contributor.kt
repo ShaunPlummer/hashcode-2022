@@ -21,7 +21,7 @@ data class Project(
     val numOfRoles: Int,
     val roles: List<Role>
 ) {
-    fun score(currentDay: Int) = score + min(0, bestBeforeDay - (currentDay + daysToComplete))
+    fun score(currentDay: Int) = max(0, score + min(0, bestBeforeDay - (currentDay + daysToComplete)))
 }
 
 data class Role(val skillName: String, val level: Int)
@@ -41,16 +41,3 @@ fun List<Contributor>.teamSkills(): MutableMap<String, Int> {
     return skills
 }
 
-fun List<Contributor>.haveSkillsFor(project: Project): Boolean {
-    sortedBy { it.skills.size }.forEach { contributor ->
-        project.roles
-            .sortedBy { it.level }
-            .reversed()
-            .firstOrNull {
-                contributor.skills.contains(it.skillName)
-            }
-    }
-    return project.roles.all { role ->
-        teamSkills().getOrDefault(role.skillName, 0) >= role.level
-    }
-}

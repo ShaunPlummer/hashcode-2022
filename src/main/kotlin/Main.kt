@@ -31,7 +31,7 @@ private fun processFile(file: File) {
     }
 
     val sortedProjects: List<Project> = projects
-        .filter { contributors.haveSkillsFor(it) }
+        .filter { contributors.haveSkillsFor(it) != null }
         .sortedByDescending { it.score }
 
     val projectTeams = mutableListOf<ProjectTeam>()
@@ -43,6 +43,10 @@ private fun processFile(file: File) {
                 team.team.add(contributor)
             }
         }
+    }
+
+    projects.forEach {
+        println("name: ${it.name}, teamRoles: ${contributors.haveSkillsFor(it)}")
     }
 
     FileWriter("out/${file.name}").write(projectTeams)
