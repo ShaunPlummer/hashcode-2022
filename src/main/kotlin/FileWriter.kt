@@ -15,7 +15,7 @@ class FileWriter(private val file: File) {
         writeLine("${teams.size}")
         teams.forEach { projectTeam ->
 
-            writeLine(projectTeam.name)
+            writeLine(projectTeam.project.name)
             projectTeam.team.forEach {
                 writeLine(it.name)
             }
