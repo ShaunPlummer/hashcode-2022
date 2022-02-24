@@ -1,8 +1,9 @@
 data class ProjectTeam(
     val project: Project,
-    val team: MutableList<Contributor> = mutableListOf(),
-    val teamRoles: Map<Role, Contributor>? = null
-)
+    val team: MutableList<Contributor> = mutableListOf()
+) {
+    fun toTeamNames() = team.joinToString(separator = " ") { it.name }
+}
 
 fun List<Contributor>.haveSkillsFor(project: Project): MutableMap<Role, Contributor?>? {
     val roleAssignments: MutableMap<Role, Contributor?> = project.roles.associateWith { null }.toMutableMap()
