@@ -1,4 +1,4 @@
 data class ProjectTeam(
     val project: Project,
-    val team: List<Contributor>
+    val team: MutableList<Contributor> = mutableListOf()
 )
