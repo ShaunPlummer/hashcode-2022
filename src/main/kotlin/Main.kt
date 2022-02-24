@@ -31,7 +31,7 @@ private fun processFile(file: File) {
     }
 
     val sortedProjects: List<Project> = projects
-        .filter { contributors.haveSkillsFor(it) }
+        .filter { contributors.haveSkillsFor(it) != null }
         .sortedByDescending { it.score }
 
     val projectTeams = mutableListOf<ProjectTeam>()
