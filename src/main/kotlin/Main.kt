@@ -1,3 +1,4 @@
+import java.io.BufferedReader
 import java.io.File
 
 
@@ -13,13 +14,33 @@ fun main(args: Array<String>) {
 
 private fun processFile(file: File) {
     println("checking file: ${file.name}")
-    FileReader(file).apply {
-        println("Header: $header")
-        reader.lines().forEach {
-            println(it)
-        }
+    val fr = FileReader(file)
+    val (contributorCount, projectCount) = fr.header.toList()
+    val contributors = List(contributorCount.toInt()) {
+        fr.reader.getContributor()
     }
+    println(contributors)
 
     // val outputFile = FileWriter("out/${file.name}")
     // outputFile.writeLine(it)
+
+
+}
+
+fun BufferedReader.getContributor(): Contributor {
+    val (name, skillCount) = readLine()!!.split(" ").toList()
+    println("name: $name, skillcount: $skillCount")
+    val skills = List(skillCount.toInt()) {
+        this.getSkill()
+    }
+    return Contributor(name, skills)
+}
+
+fun BufferedReader.getSkill(): Skill {
+    val (name, level) = readLine()!!.split(" ").toList()
+    return Skill(name, level.toInt())
+}
+
+fun BufferedReader.getProject() {
+
 }
