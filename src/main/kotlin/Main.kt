@@ -20,6 +20,10 @@ private fun processFile(file: File) {
         fr.reader.getContributor()
     }
     println(contributors)
+    val projects = List(projectCount.toInt()) {
+        fr.reader.getProject()
+    }
+    println(projects)
 
     // val outputFile = FileWriter("out/${file.name}")
     // outputFile.writeLine(it)
@@ -41,6 +45,21 @@ fun BufferedReader.getSkill(): Skill {
     return Skill(name, level.toInt())
 }
 
-fun BufferedReader.getProject() {
+fun BufferedReader.getProject(): Project {
+    val (name, daysToComplete, score, bestBeforeDay, numOfRoles) = readLine().split(" ")
+    return Project(
+        name = name,
+        daysToComplete = daysToComplete.toInt(),
+        score = score.toInt(),
+        bestBeforeDay = bestBeforeDay.toInt(),
+        numOfRoles = numOfRoles.toInt(),
+        roles = List(numOfRoles.toInt()) {
+            getRole()
+        }
+    )
+}
 
+fun BufferedReader.getRole(): Role {
+    val (skillName, level) = readLine().split(" ")
+    return Role(skillName, level.toInt())
 }
