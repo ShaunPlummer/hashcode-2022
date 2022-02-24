@@ -1,8 +1,11 @@
 data class Contributor(val name: String, val skills: List<Skill> = emptyList()) {
 
+    fun hasSkill(searchSkill: String, level: Int): Boolean = findSkillAtOrBelow(searchSkill, level) != null
+
     fun findSkillAtOrBelow(searchSkill: String, level: Int): Skill? {
-        return skills.firstOrNull { it.name == searchSkill && it.level == level }
+        return skills.firstOrNull { it.name == searchSkill && it.level == level || it.level == level -1 }
     }
+
 }
 
 data class Skill(val name: String, val level: Int)
