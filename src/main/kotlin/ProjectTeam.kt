@@ -1,4 +1,4 @@
 data class ProjectTeam(
-    val name: String,
+    val project: Project,
     val team: List<Contributor>
 )
