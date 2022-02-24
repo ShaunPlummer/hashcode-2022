@@ -27,7 +27,7 @@ private fun processFile(file: File) {
     println("team skills: ${contributors.teamSkills()}")
 
     projects.forEach { project ->
-        println("project: ${project.name}, team can do: ${contributors.haveSkills(project)}")
+        println("project: ${project.name}, team can do: ${contributors.haveSkillsFor(project)}")
     }
 
     projects.sortedBy { it.score }.forEach {
