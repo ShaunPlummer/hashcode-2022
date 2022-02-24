@@ -8,7 +8,7 @@ data class Contributor(val name: String, val skills: List<Skill> = emptyList()) 
 
 }
 
-data class Skill(val name: String, val level: Int)
+data class Skill(val name: String, var level: Int)
 
 data class Project(
     val name: String,
@@ -36,7 +36,7 @@ fun List<Contributor>.teamSkills(): MutableMap<String, Int> {
     return skills
 }
 
-fun List<Contributor>.haveSkills(project: Project): Boolean {
+fun List<Contributor>.haveSkillsFor(project: Project): Boolean {
     return project.roles.all { role ->
         teamSkills().getOrDefault(role.skillName, 0) >= role.level
     }
