@@ -25,10 +25,11 @@ private fun processFile(file: File) {
     }
     println(projects)
 
-    // val outputFile = FileWriter("out/${file.name}")
-    // outputFile.writeLine(it)
+    projects.sortedBy { it.score }.forEach {
 
+    }
 
+    // FileWriter("out/${file.name}").write()
 }
 
 fun BufferedReader.getContributor(): Contributor {
