@@ -32,19 +32,12 @@ private fun processFile(file: File) {
 
     val sortedProjects: List<Project> = projects
         .filter { contributors.haveSkillsFor(it) != null }
-        .sortedByDescending { it.score }
+        .sortedByDescending { it.score / it.daysToComplete }
 
     val projectTeams = mutableListOf<ProjectTeam>()
     sortedProjects.forEach { project ->
-        val team = ProjectTeam(project)
+        val team = ProjectTeam(project = project, team = contributors.haveSkillsFor(project)!!.values.filterNotNull())
         projectTeams.add(team)
-        project.roles.forEach { role ->
-            contributors.find {
-                it.hasSkillAtLevel(role.skillName, role.level) && !team.hasContributor(it)
-            }?.let { contributor ->
-                team.team.add(contributor)
-            }
-        }
     }
 
     FileWriter("out/${file.name}").write(projectTeams)
