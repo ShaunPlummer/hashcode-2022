@@ -9,16 +9,23 @@ fun List<Contributor>.haveSkillsFor(project: Project): MutableMap<Role, Contribu
 
     fun unfilledRoles() = roleAssignments
         .filter { (_, contributor) -> contributor == null }
-        .map { it.key }
+        .keys
 
     this.sortedBy { it.skills.size }.forEach { contributor ->
         val role = unfilledRoles()
             .sortedBy { it.level }
             .reversed()
-            .firstOrNull {
-                contributor.skills.contains(it.skillName)
+            .firstOrNull { role ->
+                contributor.canFillRole(role)
             }
         if (role != null) roleAssignments[role] = contributor
     }
-    return roleAssignments.takeIf { unfilledRoles().isEmpty() }
+    val ret = roleAssignments.takeIf { unfilledRoles().isEmpty() }
+    return ret
+}
+
+fun Contributor.canFillRole(role: Role): Boolean {
+    return skills.any { skill ->
+        skill.name == role.skillName && skill.level >= role.level
+    }
 }
