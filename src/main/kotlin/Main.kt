@@ -8,7 +8,6 @@ import java.io.File
 fun main(args: Array<String>) {
     File(args.first())
         .listFiles()
-        ?.filter { it.name == "a_an_example.in.txt" }
         ?.forEach(::processFile)
 }
 
