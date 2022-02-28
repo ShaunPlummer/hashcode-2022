@@ -1,30 +1,11 @@
-import java.lang.Integer.max
-import kotlin.math.min
-
 data class Contributor(val name: String, val skills: List<Skill> = emptyList()) {
 
     fun hasSkillAtLevel(searchSkill: String, level: Int): Boolean = findSkillAtLevel(searchSkill, level) != null
 
     fun findSkillAtLevel(searchSkill: String, level: Int): Skill? {
-        return skills.firstOrNull { it.name == searchSkill && it.level >= level}
+        return skills.firstOrNull { it.name == searchSkill && it.level >= level }
     }
-
 }
-
-data class Skill(val name: String, var level: Int)
-
-data class Project(
-    val name: String,
-    val daysToComplete: Int,
-    val score: Int,
-    val bestBeforeDay: Int,
-    val numOfRoles: Int,
-    val roles: List<Role>
-) {
-    fun score(currentDay: Int) = max(0, score + min(0, bestBeforeDay - (currentDay + daysToComplete)))
-}
-
-data class Role(val skillName: String, val level: Int)
 
 fun List<Contributor>.teamSkills(): MutableMap<String, Int> {
     val skills = mutableMapOf<String, Int>()
@@ -40,4 +21,3 @@ fun List<Contributor>.teamSkills(): MutableMap<String, Int> {
     }
     return skills
 }
-

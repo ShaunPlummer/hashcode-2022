@@ -15,19 +15,19 @@ private fun processFile(file: File) {
     println("checking file: ${file.name}")
     val fr = FileReader(file)
     val (contributorCount, projectCount) = fr.header.toList()
-    val contributors = List(contributorCount.toInt()) {
+    val contributors = List(contributorCount) {
         fr.reader.getContributor()
     }.toMutableList()
     println(contributors)
-    val projects = List(projectCount.toInt()) {
+    val projects = List(projectCount) {
         fr.reader.getProject()
     }
     println(projects)
     // println("team skills: ${contributors.teamSkills()}")
 
-    projects.forEach { project ->
-        // println("project: ${project.name}, team can do: ${contributors.haveSkillsFor(project)}")
-    }
+    // projects.forEach { project ->
+    //     println("project: ${project.name}, team can do: ${contributors.haveSkillsFor(project)}")
+    // }
 
     val sortedProjects: List<Project> = projects
         .filter { contributors.haveSkillsFor(it) != null }
